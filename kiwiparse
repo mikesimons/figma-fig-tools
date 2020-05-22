@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+var kiwi = require('kiwi-schema');
+var fs = require('fs');
+
+var schema_file = process.argv[2];
+var data_file = process.argv[3];
+
+var kiwib = fs.readFileSync(schema_file)
+var schema = kiwi.decodeBinarySchema(kiwib);
+var compiled = kiwi.compileSchema(schema);
+
+var data = fs.readFileSync(data_file);
+var result = compiled.decodeMessage(data);
+
+console.log(JSON.stringify(result));

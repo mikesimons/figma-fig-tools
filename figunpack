@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+require 'zlib'
+require 'json'
+require 'fileutils'
+
+def inflate(string)
+  zstream = Zlib::Inflate.new(-Zlib::MAX_WBITS)
+  buf = zstream.inflate(string)
+  zstream.finish
+  zstream.close
+  buf
+end
+
+data = {}
+File.open(ARGV[0]) do |f|
+  data[:header] = f.read(8)
+  data[:version] = f.read(4).unpack("V")[0]
+  data[:kiwib_length] = f.read(4).unpack("V")[0]
+  data[:kiwib_raw] = f.read(data[:kiwib_length])
+  data[:kiwib_inflated] = inflate(data[:kiwib_raw])
+  data[:data_length] = f.read(4).unpack("V")[0]
+  data[:data_raw] = f.read(data[:data_length])
+  data[:data_inflated] = inflate(data[:data_raw])
+  data[:thumbnail_length] = f.read(4).unpack("V")[0]
+  data[:thumbnail_raw] = f.read(data[:thumbnail_length])
+end
+
+out_name = "#{File.basename(ARGV[0])}.out"
+FileUtils.mkdir_p out_name
+data.each do |k,v|
+  File.write("#{out_name}/#{k}", v)
+end
+
+puts `$(pwd)/kiwiparse "#{out_name}/kiwib_inflated" "#{out_name}/data_inflated" > "#{out_name}/data.json"`
