@@ -4,7 +4,7 @@ Hacky scripts to investigate the `.fig` file format.
 
 ## Format
 
-`.fig` files have 4 sections:
+There are two formats of `.fig` file floating around. The older one has: 4 sections:
 - Header
 - kiwib schema (zlib deflated)
 - data (zlib deflated)
@@ -13,6 +13,12 @@ Hacky scripts to investigate the `.fig` file format.
 Each section (except the header) consist of 2 fields:
 - 4 byte length (little endian)
 - data (length bytes)
+
+The newer format is just a zip file containing:
+- canvas.fig - A fig file of the older format except without the trailing PNG thumbnail
+- thumbnail.png - The thumbnail that used to be embedded in the .fig
+- meta.json - A bunch of boring metadata
+- images/ - A folder that I've never seen populated but presumably contains... images
 
 ## Installing
 You'll need a relatively recent ruby (e.g. 2.7) and node + npm.
