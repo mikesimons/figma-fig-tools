@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ufwb version="1.17">
+    <grammar name="FIG grammar" start="id:1" author="Mike Simons" fileextension="fig">
+        <description>Grammar for FIG files</description>
+        <structure name="Figma file" id="1" encoding="ISO_8859-1:1987" endian="little" signed="no">
+            <string name="magic_bytes" id="11" fillcolor="FFC200" type="fixed-length" length="8" encoding="ISO_8859-1:1987">
+                <fixedvalues>
+                    <fixedvalue name="&lt;unnamed&gt;" value="fig-kiwi"/>
+                </fixedvalues>
+            </string>
+            <number name="version" id="12" fillcolor="FF6E00" type="integer" length="4"/>
+            <number name="unknown_length" id="32" fillcolor="9B9B9B" type="integer" length="4"/>
+            <binary name="&lt;Binary Fill Bytes&gt;" id="13" unused="yes" fillcolor="D7D7D7" length="unknown_length"/>
+            <structure name="&lt;Enclosing Structure&gt;" id="23">
+                <number name="data_length" id="25" fillcolor="39C066" type="integer" length="4"/>
+                <binary name="data" id="16" fillcolor="81FF8A" length="data_length">
+                    <description>First byte looks like length
+Next 3 bytes 0x00
+Following bytes are data</description>
+                </binary>
+            </structure>
+            <number name="thumbnail_length" id="33" type="integer" length="4"/>
+            <binary name="thumbnail" id="31" fillcolor="62A3FF" length="thumbnail_length"/>
+        </structure>
+    </grammar>
+</ufwb>

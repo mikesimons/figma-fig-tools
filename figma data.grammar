@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ufwb version="1.17">
+    <grammar name="figma data" start="id:46" author="Mike Simons" uti="public.data">
+        <description>Grammar for my file format</description>
+        <structure name="File" id="46" encoding="ISO_8859-1:1987" endian="big" signed="no">
+            <description>7f 00 00 00 = 127
+Repeats often
+Possibly some kind of record type ID or start / end marker
+Usually preceded by 3 bytes (06 01 08 common
+
+Background colour of 666666 appears as 
+7d9a9999 7d9a9999 7d9a9999</description>
+            <binary name="&lt;Binary Fill Bytes&gt;" id="48" unused="yes" length="16"/>
+            <string name="document_name" id="49" fillcolor="FFB2A6" type="zero-terminated" encoding="ISO_8859-1:1987"/>
+            <binary name="&lt;Binary Fill Bytes-1&gt;" id="50" unused="yes" length="29"/>
+            <binary name="page1" id="56" fillcolor="FFC1D3" length="68"/>
+            <binary name="&lt;Binary Fill Bytes-1&gt;-1" id="57" unused="yes" length="67"/>
+            <binary name="page2" id="55" fillcolor="7DFFAB" length="68"/>
+        </structure>
+    </grammar>
+</ufwb>
